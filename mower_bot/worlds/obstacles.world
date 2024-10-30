@@ -391,8 +391,8 @@
       </link>
       <static>0</static>
       <plugin name='gazebo_ros2_control' filename='libgazebo_ros2_control.so'>
-        <parameters>/home/alex/test_ws/install/mower_bot/share/mower_bot/config/my_controllers.yaml</parameters>
-        <parameters>/home/alex/test_ws/install/mower_bot/share/mower_bot/config/gaz_ros2_ctl_use_sim.yaml</parameters>
+        <parameters>/home/alex/mower_ws/install/mower_bot/share/mower_bot/config/my_controllers.yaml</parameters>
+        <parameters>/home/alex/mower_ws/install/mower_bot/share/mower_bot/config/gaz_ros2_ctl_use_sim.yaml</parameters>
       </plugin>
       <pose>0 0 0 0 -0 0</pose>
     </model>
