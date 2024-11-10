@@ -13,13 +13,25 @@ def generate_launch_description():
     # Package name
     package_name='mower_bot' 
 
-    # Launch configuration
+    # Launch configurations
     headless = LaunchConfiguration('headless')
-
+    world = LaunchConfiguration('world')
+    rviz = LaunchConfiguration('rviz')
+    
+    # Launch Arguments
     declare_headless = DeclareLaunchArgument(
         'headless', default_value='True',
         description='Decides if the simulation is visualized')
-
+    
+    world_path = os.path.join(get_package_share_directory(package_name),'worlds/box.world')
+    declare_world = DeclareLaunchArgument(
+        name='world', default_value=world_path,
+        description='Full path to the world model file to load')
+    
+    declare_rviz = DeclareLaunchArgument(
+        name='rviz', default_value='True',
+        description='Opens rviz is set to True'
+    )
     # Launch Robot State Publisher
     rsp = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource([os.path.join(
@@ -43,13 +55,6 @@ def generate_launch_description():
             remappings=[('/cmd_vel_out','/diff_cont/cmd_vel_unstamped')]
     )
     
-    # Setup the world
-    world_path = os.path.join(get_package_share_directory(package_name),'worlds/box.world')
-    declare_world_cmd = DeclareLaunchArgument(
-        name='world',
-        default_value=world_path,
-        description='Full path to the world model file to load')
-
     # Launch the gazebo server to initialize the simulation
     gazebo_params_file = os.path.join(get_package_share_directory(package_name),'config','gazebo_params.yaml')
     gazebo_server = IncludeLaunchDescription(
@@ -74,18 +79,21 @@ def generate_launch_description():
                         output='screen')
     
     # Launch Rviz with pre-made view
-    rviz_config_file = os.path.join(get_package_share_directory(package_name), 'config', 'mower.rviz'),
-    rviz = Node(
-            package='rviz2',
-            executable='rviz2',
-            arguments=['-d', rviz_config_file],
-            output='screen',
-            remappings=[('/map', 'map'),
-                    ('/tf', 'tf'),
-                    ('/tf_static', 'tf_static'),
-                    ('/goal_pose', 'goal_pose'),
-                    ('/clicked_point', 'clicked_point'),
-                    ('/initialpose', 'initialpose')])
+    rviz_config_file = os.path.join(get_package_share_directory(package_name), 'config', 'mower.rviz')
+    rviz2 = GroupAction(
+        condition=IfCondition(rviz),
+        actions=[Node(
+                    package='rviz2',
+                    executable='rviz2',
+                    arguments=['-d', rviz_config_file],
+                    output='screen',
+                    remappings=[('/map', 'map'),
+                                ('/tf', 'tf'),
+                                ('/tf_static', 'tf_static'),
+                                ('/goal_pose', 'goal_pose'),
+                                ('/clicked_point', 'clicked_point'),
+                                ('/initialpose', 'initialpose')])]
+    )
 
     # Launch Differential Drive Controller
     diff_drive_spawner = Node(
@@ -108,21 +116,23 @@ def generate_launch_description():
                 )]), launch_arguments={'use_sim_time': 'true'}.items()
     )
 
-    # Work in progress - no idea why it does not work
-    # navigation = IncludeLaunchDescription(
-    #                 PythonLaunchDescriptionSource([os.path.join(
-    #                     get_package_share_directory(package_name),'launch','nav.launch.py'
-    #                 )])
-    # )
+    # Launch the navigation stack configured for coverage planning
+    nav_params_file = os.path.join(get_package_share_directory(package_name), 'config', 'coverage_params.yaml')
+    navigation = IncludeLaunchDescription(
+                    PythonLaunchDescriptionSource([os.path.join(
+                        get_package_share_directory(package_name),'launch','coverage.launch.py'
+                    )]),  launch_arguments={'use_sim_time': 'true', 'autostart': 'True', 'params_file': nav_params_file}.items()
+    )
 
     # Launch them all!
     return LaunchDescription([
         # Declare world path, if not treated as a launch config
-        declare_world_cmd,
         declare_headless,
+        declare_world,
+        declare_rviz,
 
         # Launch the nodes
-        rviz,
+        rviz2,
         rsp,
         joystick,
         twist_mux,
@@ -132,5 +142,5 @@ def generate_launch_description():
         diff_drive_spawner,
         joint_broad_spawner,
         slam,
-        #navigation,
+        navigation
     ])

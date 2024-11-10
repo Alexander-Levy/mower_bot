@@ -38,7 +38,7 @@ def generate_launch_description():
         'autostart': autostart,
     }
 
-    # Node parameters
+    # Prepare node parameters
     configured_params = ParameterFile(
         RewrittenYaml(
             source_file=params_file,
@@ -47,7 +47,7 @@ def generate_launch_description():
             convert_types=True),
         allow_substs=True)
 
-    # unused migth remove later idk
+    # Set enviroment variable - why?, idk but it needs this line to work
     stdout_linebuf_envvar = SetEnvironmentVariable(
         'RCUTILS_LOGGING_BUFFERED_STREAM', '1')
     
@@ -134,10 +134,10 @@ def generate_launch_description():
         ],
     )
 
-    # # Create the launch description and populate
+    # Create the launch description and populate
     ld = LaunchDescription([
         # Launch Parameters
-        #stdout_linebuf_envvar,
+        stdout_linebuf_envvar,
         declare_params_cmd,
         declare_sim_time_cmd,
         declare_autostart_cmd,

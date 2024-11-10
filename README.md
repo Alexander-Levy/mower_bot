@@ -36,15 +36,15 @@ TODO
 ## Usage
 
 ### Simulation
-The simulation can be launched with
+The simulation automatically runs joy-teleop, slam, and the navigation stack, so it can all be run with the following command:
 ```bash
 ros2 launch mower_bot sim.launch.py 
 ```
-You can decide if the simulation visualizes gazebo using the "headless" launch argument. For example:
+The simulation launch file offers serveral launch configurations to modify its behaviour, this is useful for testing. You can decide if the simulation visualizes gazebo using the "headless" launch argument, the "world" launch argument lets you provide the path to a custom world, and the "rviz" launch argument can be used to open rviz2 alongside the simulation. Example with custom launch arguments:
 ```bash
-ros2 launch mower_bot sim.launch.py headless:=False 
+ros2 launch mower_bot sim.launch.py world:=<path_to_world> headless:=False rviz:=True
 ```
-The default is set to True.
+By default the box wolrd is loaded, the simulation is not visualized and rviz2 is opened.
 
 ### Real World Use
 The robot can be initialized with the following command.This will launch the robot state publisher, the joint state broadcaster, the rplidar driver and the controller manager and differential drive controller.
