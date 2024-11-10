@@ -47,7 +47,7 @@ ros2 launch mower_bot sim.launch.py world:=<path_to_world> headless:=False rviz:
 By default the box wolrd is loaded, the simulation is not visualized and rviz2 is opened.
 
 ### Real World Use
-The robot can be initialized with the following command.This will launch the robot state publisher, the joint state broadcaster, the rplidar driver and the controller manager and differential drive controller.
+The robot can be initialized with the following command. This will launch the robot state publisher, the joint state broadcaster, the rplidar driver, the controller manager and differential drive controller.
 ```bash
 ros2 launch mower_bot mower.launch.py 
 ```
