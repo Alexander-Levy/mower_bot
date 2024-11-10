@@ -3,23 +3,32 @@
 ## Introduction
 
 This is the code for my thesis in university. The proyect consist of an autonomous robot that can:
-
+    
     - Map its working area 
     - Locate itself within that area 
     - Plan the best path to mow the lawn 
     - Calculate the appropiate wheel velocities to achieve this
 
 This is a ROS2 based proyect that is built to work on: 
-
+    
     Linux distro: Ubuntu 22.04 LTS
     ROS2 distro: Humble Hawksbill
 
 The processing of data is distributed between a Raspberry Pi running on the lawn mower and a laptop running on the same network
 
-## Packages
+## Package folder
 
-### Mower Bot
-Contains the robot's description, congigurations and launch files 
+### config
+Contains all of the necesary configuration files. This includes rviz views, parameters for the robot controller, slam and navigation, as well as configuration for the tele-operation and multiplexer. 
+
+### description
+Contains the robot's description written in xacro. Contains information about the robots dimensions, mass, actuators, sensors, etc. Also contains gazebo plugins for simulation purposes
+
+### launch
+Contains the launch files to startup the robot, the robot sensors, slam, navigation and simulation.
+
+### worlds
+Contains the world files used in simulation
 
 ## Dependencies
 Since the load is distributed between two machines, some packages are only used by one of them so its not necesarry to install everything on both machines. I will make it clear which pacakges are used by what.
