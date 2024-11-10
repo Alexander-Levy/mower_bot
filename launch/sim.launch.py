@@ -2,10 +2,11 @@ import os
 from launch_ros.actions import Node
 from launch import LaunchDescription
 from launch.conditions import IfCondition
-from launch.substitutions import LaunchConfiguration, PythonExpression
 from ament_index_python.packages import get_package_share_directory
-from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument, GroupAction
+from launch.substitutions import LaunchConfiguration, PythonExpression
 from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument, GroupAction
+
 
 def generate_launch_description():
 
@@ -73,7 +74,7 @@ def generate_launch_description():
                         output='screen')
     
     # Launch Rviz with pre-made view
-    rviz_config_file = os.path.join(get_package_share_directory(package_name), 'config', 'bot.rviz'),
+    rviz_config_file = os.path.join(get_package_share_directory(package_name), 'config', 'mower.rviz'),
     rviz = Node(
             package='rviz2',
             executable='rviz2',
@@ -110,8 +111,8 @@ def generate_launch_description():
     # Work in progress - no idea why it does not work
     # navigation = IncludeLaunchDescription(
     #                 PythonLaunchDescriptionSource([os.path.join(
-    #                     get_package_share_directory(package_name),'launch','coverage.launch.py'
-    #                 )]), launch_arguments={'use_sim_time': 'true'}.items()
+    #                     get_package_share_directory(package_name),'launch','nav.launch.py'
+    #                 )])
     # )
 
     # Launch them all!
@@ -131,5 +132,5 @@ def generate_launch_description():
         diff_drive_spawner,
         joint_broad_spawner,
         slam,
-        #navigation
+        #navigation,
     ])

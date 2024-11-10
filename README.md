@@ -9,7 +9,7 @@ This is the code for my thesis in university. The proyect consist of an autonomo
     - Plan the best path to mow the lawn 
     - Calculate the appropiate wheel velocities to achieve this
 
-This is a ROS2 based proyect that is built to work on: 
+This is a ROS2 based project that is built to work on: 
     
     Linux distro: Ubuntu 22.04 LTS
     ROS2 distro: Humble Hawksbill
@@ -29,6 +29,9 @@ Contains the launch files to startup the robot, the robot sensors, slam, navigat
 
 ### worlds
 Contains the world files used in simulation. An empty world, a world full of obstacles and a world where the robot spawns inside four walls.
+
+## Project Overview
+TODO
 
 ## Usage
 
