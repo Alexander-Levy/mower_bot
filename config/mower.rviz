@@ -343,6 +343,32 @@ Visualization Manager:
         Reliability Policy: Reliable
         Value: /received_global_plan
       Value: true
+    - Alpha: 1
+      Class: rviz_default_plugins/Polygon
+      Color: 25; 255; 0
+      Enabled: true
+      Name: Field Boundary
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /coverage_server/field_boundary
+      Value: true
+    - Alpha: 1
+      Class: rviz_default_plugins/Polygon
+      Color: 25; 255; 0
+      Enabled: true
+      Name: Planning Field
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /coverage_server/planning_field
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -402,8 +428,8 @@ Visualization Manager:
       Scale: 80.61502838134766
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz_default_plugins)
-      X: -0.31031084060668945
-      Y: -0.39158153533935547
+      X: 0.47118091583251953
+      Y: 2.709573745727539
     Saved: ~
 Window Geometry:
   Displays:
