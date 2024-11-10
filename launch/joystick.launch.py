@@ -1,16 +1,20 @@
 import os
-from launch import LaunchDescription
 from launch_ros.actions import Node
-from launch.substitutions import LaunchConfiguration
+from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
+from launch.substitutions import LaunchConfiguration
 from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
-    # Configure weather to use sim time or not
+
+    # Package name
+    package_name = get_package_share_directory('mower_bot')
+
+    # Launch configuration
     use_sim_time = LaunchConfiguration('use_sim_time')
 
     # Get the params file for our joystick
-    joy_params = os.path.join(get_package_share_directory('mower_bot'),'config','joystick.yaml')
+    joy_params = os.path.join(package_name,'config','joystick.yaml')
 
     # Launch the joy Node
     joy_node = Node(

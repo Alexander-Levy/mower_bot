@@ -1,17 +1,18 @@
 import os
-from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, SetEnvironmentVariable
-from launch.substitutions import LaunchConfiguration
-from launch_ros.actions import LoadComposableNodes
 from launch_ros.actions import Node
-from launch_ros.descriptions import ComposableNode, ParameterFile
+from launch import LaunchDescription
 from nav2_common.launch import RewrittenYaml
+from launch_ros.actions import LoadComposableNodes
+from launch.substitutions import LaunchConfiguration
+from launch_ros.descriptions import ComposableNode, ParameterFile
 from ament_index_python.packages import get_package_share_directory
+from launch.actions import DeclareLaunchArgument, SetEnvironmentVariable
 
 
 def generate_launch_description():
 
-    bringup_dir = get_package_share_directory('mower_bot')
+    # Package name
+    package_name = get_package_share_directory('mower_bot')
 
     # Launch configurations    
     autostart = LaunchConfiguration('autostart')
@@ -53,7 +54,7 @@ def generate_launch_description():
     
     # Declare the launch configuration
     declare_params_cmd = DeclareLaunchArgument(
-        'params_file', default_value=os.path.join(bringup_dir, 'config', 'coverage_params.yaml'))
+        'params_file', default_value=os.path.join(package_name, 'config', 'coverage_params.yaml'))
     
     declare_sim_time_cmd = DeclareLaunchArgument(
         'use_sim_time', default_value='true',

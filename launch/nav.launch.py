@@ -1,21 +1,21 @@
 import os
-
-from ament_index_python.packages import get_package_share_directory
-
-from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, GroupAction, SetEnvironmentVariable
-from launch.conditions import IfCondition
-from launch.substitutions import LaunchConfiguration, PythonExpression
-from launch_ros.actions import LoadComposableNodes
 from launch_ros.actions import Node
-from launch_ros.descriptions import ComposableNode
+from launch import LaunchDescription
+from launch.conditions import IfCondition
 from nav2_common.launch import RewrittenYaml
+from launch_ros.actions import LoadComposableNodes
+from launch_ros.descriptions import ComposableNode
+from ament_index_python.packages import get_package_share_directory
+from launch.substitutions import LaunchConfiguration, PythonExpression
+from launch.actions import DeclareLaunchArgument, GroupAction, SetEnvironmentVariable
 
 
 def generate_launch_description():
+    
     # Get the launch directory
     package_name = get_package_share_directory('mower_bot')
 
+    # Launch configurations
     namespace = LaunchConfiguration('namespace')
     use_sim_time = LaunchConfiguration('use_sim_time')
     autostart = LaunchConfiguration('autostart')

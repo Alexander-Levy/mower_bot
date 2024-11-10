@@ -126,7 +126,7 @@ def generate_launch_description():
 
     # Launch them all!
     return LaunchDescription([
-        # Declare world path, if not treated as a launch config
+        # Declare launch arguments
         declare_headless,
         declare_world,
         declare_rviz,

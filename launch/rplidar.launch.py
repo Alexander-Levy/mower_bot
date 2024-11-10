@@ -1,6 +1,7 @@
 from launch_ros.actions import Node
 from launch import LaunchDescription
 
+
 def generate_launch_description():
 
     # Launch the rplidar a1m8 driver node and set-up the serial port, frame_id and scan parameters.
