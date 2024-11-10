@@ -1,14 +1,23 @@
 import os
 from launch_ros.actions import Node
 from launch import LaunchDescription
+from launch.conditions import IfCondition
+from launch.substitutions import LaunchConfiguration, PythonExpression
 from ament_index_python.packages import get_package_share_directory
-from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument
+from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument, GroupAction
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 def generate_launch_description():
 
     # Package name
     package_name='mower_bot' 
+
+    # Launch configuration
+    headless = LaunchConfiguration('headless')
+
+    declare_headless = DeclareLaunchArgument(
+        'headless', default_value='True',
+        description='Decides if the simulation is visualized')
 
     # Launch Robot State Publisher
     rsp = IncludeLaunchDescription(
@@ -40,12 +49,21 @@ def generate_launch_description():
         default_value=world_path,
         description='Full path to the world model file to load')
 
-    # Include the Gazebo launch file, provided by the gazebo_ros package
+    # Launch the gazebo server to initialize the simulation
     gazebo_params_file = os.path.join(get_package_share_directory(package_name),'config','gazebo_params.yaml')
-    gazebo = IncludeLaunchDescription(
+    gazebo_server = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource([os.path.join(
                     get_package_share_directory('gazebo_ros'), 'launch', 'gzserver.launch.py')]),
                     launch_arguments={'extra_gazebo_args': '--ros-args --params-file ' + gazebo_params_file}.items()
+    )
+
+    # Launch the gazebo client to visualize the simulation only if headless is declared as False
+    gazebo_client = GroupAction(
+        condition=IfCondition(PythonExpression(['not ', headless])),
+        actions=[IncludeLaunchDescription(
+                    PythonLaunchDescriptionSource([os.path.join(
+                    get_package_share_directory('gazebo_ros'), 'launch', 'gzclient.launch.py')]),
+                    launch_arguments={'extra_gazebo_args': '--ros-args --params-file ' + gazebo_params_file}.items())]
     )
 
     # Run the spawner node from the gazebo_ros package. 
@@ -86,13 +104,15 @@ def generate_launch_description():
     return LaunchDescription([
         # Declare world path, if not treated as a launch config
         declare_world_cmd,
+        declare_headless,
 
         # Launch the nodes
         rviz,
         rsp,
         joystick,
         twist_mux,
-        gazebo,
+        gazebo_server,
+        gazebo_client,
         spawn_entity,
         diff_drive_spawner,
         joint_broad_spawner

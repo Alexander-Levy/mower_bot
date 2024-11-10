@@ -50,14 +50,11 @@
         <color rgba="0.149 0.612 0.082 1"/>
     </material>
 
-    <!-- BASE LINK -->
-
+    <!-- Base Link -->
     <link name="base_link">
-
     </link>
 
-    <!-- BASE_FOOTPRINT LINK -->
-
+    <!-- Base Footprint -->
     <joint name="base_footprint_joint" type="fixed">
         <parent link="base_link"/>
         <child link="base_footprint"/>
@@ -67,8 +64,7 @@
     <link name="base_footprint">
     </link>
 
-    <!-- CHASSIS LINK -->
-
+    <!-- Chassis -->
     <joint name="chassis_joint" type="fixed">
         <parent link="base_link"/>
         <child link="chassis"/>
@@ -98,8 +94,7 @@
         <material>Gazebo/Grey</material>
     </gazebo>
 
-    <!-- LEFT WHEEL LINK -->
-
+    <!-- Left Wheel -->
     <joint name="left_wheel_joint" type="continuous">
         <parent link="base_link"/>
         <child link="left_wheel"/>
@@ -128,8 +123,7 @@
         <material>Gazebo/Purple</material>
     </gazebo>
 
-    <!-- RIGHT WHEEL LINK -->
-
+    <!-- Right Wheel -->
     <joint name="right_wheel_joint" type="continuous">
         <parent link="base_link"/>
         <child link="right_wheel"/>
@@ -158,14 +152,12 @@
         <material>Gazebo/Green</material>
     </gazebo>
 
-    <!-- CASTER WHEEL LINK -->
-
+    <!-- Caster Wheel -->
     <joint name="caster_wheel_joint" type="fixed">
         <parent link="chassis"/>
         <child link="caster_wheel"/>
         <origin xyz="${caster_wheel_offset_x} 0 ${caster_wheel_offset_z}"/>
     </joint>
-
 
     <link name="caster_wheel">
         <visual>

@@ -16,7 +16,7 @@ This is a ROS2 based proyect that is built to work on:
 
 The processing of data is distributed between a Raspberry Pi running on the lawn mower and a laptop running on the same network
 
-## Package folder
+## How the package is organized
 
 ### config
 Contains all of the necesary configuration files. This includes rviz views, parameters for the robot controller, slam and navigation, as well as configuration for the tele-operation and multiplexer. 
@@ -28,7 +28,26 @@ Contains the robot's description written in xacro. Contains information about th
 Contains the launch files to startup the robot, the robot sensors, slam, navigation and simulation.
 
 ### worlds
-Contains the world files used in simulation
+Contains the world files used in simulation. An empty world, a world full of obstacles and a world where the robot spawns inside four walls.
+
+## Usage
+
+### Simulation
+The simulation can be launched with
+```bash
+ros2 launch mower_bot sim.launch.py 
+```
+You can decide if the simulation visualizes gazebo using the "headless" launch argument. For example:
+```bash
+ros2 launch mower_bot sim.launch.py headless:=False 
+```
+The default is set to True.
+
+### Real World Use
+The robot can be initialized with the following command.This will launch the robot state publisher, the joint state broadcaster, the rplidar driver and the controller manager and differential drive controller.
+```bash
+ros2 launch mower_bot mower.launch.py 
+```
 
 ## Dependencies
 Since the load is distributed between two machines, some packages are only used by one of them so its not necesarry to install everything on both machines. I will make it clear which pacakges are used by what.

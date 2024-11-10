@@ -12,11 +12,13 @@ from ament_index_python.packages import get_package_share_directory
 def generate_launch_description():
 
     bringup_dir = get_package_share_directory('mower_bot')
-        
+
+    # Launch configurations    
     autostart = LaunchConfiguration('autostart')
     params_file = LaunchConfiguration('params_file')
     use_sim_time = LaunchConfiguration('use_sim_time')
 
+    # List of nodes to be managed
     lifecycle_nodes = ['controller_server',
                        'smoother_server',
                        'planner_server',
@@ -26,6 +28,7 @@ def generate_launch_description():
                        'waypoint_follower',
                        'coverage_server']
 
+    # Topic remappings
     remappings = [('/tf', 'tf'),
                   ('/tf_static', 'tf_static')]
     
@@ -35,6 +38,7 @@ def generate_launch_description():
         'autostart': autostart,
     }
 
+    # Node parameters
     configured_params = ParameterFile(
         RewrittenYaml(
             source_file=params_file,
@@ -43,9 +47,11 @@ def generate_launch_description():
             convert_types=True),
         allow_substs=True)
 
+    # unused migth remove later idk
     stdout_linebuf_envvar = SetEnvironmentVariable(
         'RCUTILS_LOGGING_BUFFERED_STREAM', '1')
     
+    # Declare the launch configuration
     declare_params_cmd = DeclareLaunchArgument(
         'params_file', default_value=os.path.join(bringup_dir, 'config', 'coverage_params.yaml'))
     
@@ -56,6 +62,7 @@ def generate_launch_description():
     declare_autostart_cmd = DeclareLaunchArgument(
         'autostart', default_value='True')
 
+    # Create a container
     create_container = Node(
         name='nav2_container',
         package='rclcpp_components',
@@ -64,6 +71,7 @@ def generate_launch_description():
         remappings=remappings,
         output='screen')
 
+    # Load navigation nodes
     load_composable_nodes = LoadComposableNodes(
         target_container='nav2_container',
         composable_node_descriptions=[
@@ -129,13 +137,10 @@ def generate_launch_description():
     # # Create the launch description and populate
     ld = LaunchDescription([
         # Launch Parameters
-        # stdout_linebuf_envvar,
+        #stdout_linebuf_envvar,
         declare_params_cmd,
         declare_sim_time_cmd,
         declare_autostart_cmd,
-        # DeclareLaunchArgument('params_file', default_value=params_file),
-        # DeclareLaunchArgument('use_sim_time', default_value='true'),
-        # DeclareLaunchArgument('autostart', default_value='True'),
         
         # Launch Nodes
         create_container,
