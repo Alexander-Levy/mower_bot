@@ -100,6 +100,20 @@ def generate_launch_description():
         arguments=["joint_broad"],
     )
 
+    # Launch Simultaneous Localization and Mapping
+    slam = IncludeLaunchDescription(
+                PythonLaunchDescriptionSource([os.path.join(
+                    get_package_share_directory(package_name),'launch','slam.launch.py'
+                )]), launch_arguments={'use_sim_time': 'true'}.items()
+    )
+
+    # Work in progress - no idea why it does not work
+    # navigation = IncludeLaunchDescription(
+    #                 PythonLaunchDescriptionSource([os.path.join(
+    #                     get_package_share_directory(package_name),'launch','coverage.launch.py'
+    #                 )]), launch_arguments={'use_sim_time': 'true'}.items()
+    # )
+
     # Launch them all!
     return LaunchDescription([
         # Declare world path, if not treated as a launch config
@@ -115,5 +129,7 @@ def generate_launch_description():
         gazebo_client,
         spawn_entity,
         diff_drive_spawner,
-        joint_broad_spawner
+        joint_broad_spawner,
+        slam,
+        #navigation
     ])
