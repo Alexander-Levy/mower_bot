@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>mower_bot</name>
+  <version>0.0.0</version>
+  <description>Autonomous lawnmower differential drive robot</description>
+  <maintainer email="my_email@email.com">Alexander Levy</maintainer>
+  <license>TODO: License declaration</license>  <!-- no idea -->
+  
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>rclcpp_action</depend>
+  <depend>nav2_util</depend>
+  <depend>nav2_bringup</depend>
+  <depend>opennav_coverage_msgs</depend>
+  <depend>opennav_coverage_bt</depend>
+  <depend>opennav_coverage</depend>
+  <depend>opennav_row_coverage</depend>
+  <depend>opennav_coverage_navigator</depend>
+  <depend>backported_bt_navigator</depend>
+  
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
