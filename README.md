@@ -53,7 +53,16 @@ The simulation launch file offers serveral launch configurations to modify its b
 ros2 launch mower_bot sim.launch.py world:=<path_to_world> headless:=False rviz:=True slam:=True nav:=True
 ```
 
-By default the box world is loaded, the simulation is not visualized, and rviz2, slam and the navigation stack are launched as well.
+By default the box world is loaded, the simulation is not visualized, and rviz2, slam and the navigation stack are launched as well. All of the launch configurations available are listed below:
+```bash
+Config      Options            Default
+world:=     <path_to_world>    /src/mower_bot/worlds/box.world 
+headless:=  True/False         True
+rviz:=      True/False         True
+slam:=      True/False         True
+nav:=       True/False         True
+```
+
 
 ### Real World Use
 The robot can be initialized with the following command on the Rasberry Pi. This will launch the robot state publisher, the joint state broadcaster, the rplidar driver, the controller manager and differential drive controller. It provides no launch configurations.
@@ -68,10 +77,17 @@ ros2 launch mower_bot monitor.launch.py
 
 You can even use the monitor launch file in simulation by setting the "use_sim_time" launch argument to true. It also has rviz, slam and nav launch arguments, similar to the simulation launch file. This gives you great flexibility, for example you could use this to only open rviz2 and the controller tele-op with the real robot with the command bellow:
 ```bash
-ros2 launch mower_bot monitor.launch.py use_sim_time:=true rviz:=True slam:=False nav:=False
+ros2 launch mower_bot monitor.launch.py use_sim_time:=false rviz:=True slam:=False nav:=False
 ```
 
-By default use_sim_time is set to false, rviz, slam and nav are set to True. 
+By default use_sim_time is set to false, rviz, slam and nav are set to True. All of the launch configurations available are listed below:
+```bash
+Config          Options            Default 
+use_sim_time:=  true/false         false
+rviz:=          True/False         True
+slam:=          True/False         True
+nav:=           True/False         True
+```
 
 ## Dependencies
 Since the load is distributed between two machines, some packages are only used by one of them so its not necesarry to install everything on both machines. I will make it clear which pacakges are used by what.
@@ -168,4 +184,9 @@ cd ~/<path_to_your_workspace>/src
 git clone https://github.com/Alexander-Levy/mower_bot.git 
 cd ..
 colcon build --symlink-install
+```
+Launch the simulation to test the package
+```bash
+source ./install/setup.bash
+ros2 launch mower_bot sim.launch.py 
 ```
