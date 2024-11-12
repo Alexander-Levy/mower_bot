@@ -2,13 +2,14 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>mower_bot</name>
-  <version>0.0.0</version>
+  <version>1.0.0</version>
   <description>Autonomous lawnmower differential drive robot</description>
-  <maintainer email="my_email@email.com">Alexander Levy</maintainer>
+  <maintainer email="ingalexanderlevy@gmail.com">Alexander Levy</maintainer>
   <license>TODO: License declaration</license>  <!-- no idea -->
   
   <buildtool_depend>ament_cmake</buildtool_depend>
 
+  <!-- Dependencies -->
   <depend>rclcpp</depend>
   <depend>rclcpp_action</depend>
   <depend>nav2_util</depend>
