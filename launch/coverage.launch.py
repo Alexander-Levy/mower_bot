@@ -48,7 +48,7 @@ def generate_launch_description():
             convert_types=True),
         allow_substs=True)
 
-    # Set enviroment variable - why?, idk but it needs this line to work
+    # Set enviroment variable 
     stdout_linebuf_envvar = SetEnvironmentVariable(
         'RCUTILS_LOGGING_BUFFERED_STREAM', '1')
     
@@ -61,7 +61,8 @@ def generate_launch_description():
         description='Use simulation (Gazebo) clock if true')
     
     declare_autostart_cmd = DeclareLaunchArgument(
-        'autostart', default_value='True')
+        'autostart', default_value='True',
+        description='Automatically startup the navigation stack')
 
     # Create a container
     create_container = Node(

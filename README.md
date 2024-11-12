@@ -36,21 +36,35 @@ TODO
 ## Usage
 
 ### Simulation
-The simulation automatically runs joy-teleop, slam, and the navigation stack, so it can all be run with the following command:
+The simulation can be run with the following command:
 ```bash
 ros2 launch mower_bot sim.launch.py 
 ```
-The simulation launch file offers serveral launch configurations to modify its behaviour, this is useful for testing. You can decide if the simulation visualizes gazebo using the "headless" launch argument, the "world" launch argument lets you provide the path to a custom world, and the "rviz" launch argument can be used to open rviz2 alongside the simulation. Example with custom launch arguments:
+
+The simulation launch file offers serveral launch configurations to modify its behaviour, this is useful for testing. You can decide if the simulation(Gazebo) is visualized using the "headless" launch argument, the "world" launch argument lets you provide a path to a custom world, the "rviz" launch argument can be used to open rviz2 alongside the simulation, the "slam" launch argument can be used to decide if the robot maps its enviroment, and the "nav" launch argument can be used to automatically launch the navigation stack. Example with custom launch arguments:
 ```bash
-ros2 launch mower_bot sim.launch.py world:=<path_to_world> headless:=False rviz:=True
+ros2 launch mower_bot sim.launch.py world:=<path_to_world> headless:=False rviz:=True slam:=True nav:=True
 ```
-By default the box wolrd is loaded, the simulation is not visualized and rviz2 is opened.
+
+By default the box world is loaded, the simulation is not visualized, and rviz2, slam and the navigation stack are launched as well.
 
 ### Real World Use
-The robot can be initialized with the following command. This will launch the robot state publisher, the joint state broadcaster, the rplidar driver, the controller manager and differential drive controller.
+The robot can be initialized with the following command on the Rasberry Pi. This will launch the robot state publisher, the joint state broadcaster, the rplidar driver, the controller manager and differential drive controller.
 ```bash
 ros2 launch mower_bot mower.launch.py 
 ```
+
+To monitor, control and launch the high level interfaces of the robot we can use the following command on the Laptop. This is will open up rviz, launch the slam and navigation stacks and allow us to tele-operate the robot with a controller.
+```bash
+ros2 launch mower_bot monitor.launch.py 
+```
+
+You can even use the monitor launch file in simulation by setting the "use_sim_time" launch argument to true. It also has rviz, slam and nav launch arguments, similar to the simulation launch file. This gives you great flexibility, for example you could use this to only open rviz2 and the controller tele-op with the real robot with the command bellow:
+```bash
+ros2 launch mower_bot monitor.launch.py slam:=False nav:=False
+```
+
+By default use_sim_time is set to false, rviz, slam and nav are set to True. 
 
 ## Dependencies
 Since the load is distributed between two machines, some packages are only used by one of them so its not necesarry to install everything on both machines. I will make it clear which pacakges are used by what.

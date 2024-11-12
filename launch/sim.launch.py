@@ -17,21 +17,34 @@ def generate_launch_description():
     headless = LaunchConfiguration('headless')
     world = LaunchConfiguration('world')
     rviz = LaunchConfiguration('rviz')
+    slam = LaunchConfiguration('slam')
+    nav = LaunchConfiguration('nav')
+    
+    # Path to default world 
+    world_path = os.path.join(get_package_share_directory(package_name),'worlds/box.world')
     
     # Launch Arguments
-    declare_headless = DeclareLaunchArgument(
-        'headless', default_value='True',
-        description='Decides if the simulation is visualized')
-    
-    world_path = os.path.join(get_package_share_directory(package_name),'worlds/box.world')
     declare_world = DeclareLaunchArgument(
         name='world', default_value=world_path,
         description='Full path to the world model file to load')
     
+    declare_headless = DeclareLaunchArgument(
+        'headless', default_value='True',
+        description='Decides if the simulation is visualized')
+    
     declare_rviz = DeclareLaunchArgument(
         name='rviz', default_value='True',
-        description='Opens rviz is set to True'
-    )
+        description='Opens rviz is set to True')
+    
+    declare_slam = DeclareLaunchArgument(
+        name='slam', default_value='True',
+        description='Activates simultaneous localization and mapping')
+    
+    declare_nav = DeclareLaunchArgument(
+        name='nav', default_value='True',
+        description='Activates the navigation stack if true')
+
+
     # Launch Robot State Publisher
     rsp = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource([os.path.join(
@@ -76,7 +89,8 @@ def generate_launch_description():
     spawn_entity = Node(package='gazebo_ros', executable='spawn_entity.py',
                         arguments=['-topic', 'robot_description',
                                    '-entity', 'my_bot'],
-                        output='screen')
+                        output='screen'
+    )
     
     # Launch Rviz with pre-made view
     rviz_config_file = os.path.join(get_package_share_directory(package_name), 'config', 'mower.rviz')
@@ -110,18 +124,22 @@ def generate_launch_description():
     )
 
     # Launch Simultaneous Localization and Mapping
-    slam = IncludeLaunchDescription(
-                PythonLaunchDescriptionSource([os.path.join(
-                    get_package_share_directory(package_name),'launch','slam.launch.py'
-                )]), launch_arguments={'use_sim_time': 'true'}.items()
+    slam_node = GroupAction(
+        condition=IfCondition(slam),
+        actions=[IncludeLaunchDescription(
+                    PythonLaunchDescriptionSource([os.path.join(
+                        get_package_share_directory(package_name),'launch','slam.launch.py'
+                    )]), launch_arguments={'use_sim_time': 'true'}.items())]
     )
 
     # Launch the navigation stack configured for coverage planning
     nav_params_file = os.path.join(get_package_share_directory(package_name), 'config', 'coverage_params.yaml')
-    navigation = IncludeLaunchDescription(
+    navigation = GroupAction(
+        condition=IfCondition(nav),
+        actions=[IncludeLaunchDescription(
                     PythonLaunchDescriptionSource([os.path.join(
                         get_package_share_directory(package_name),'launch','coverage.launch.py'
-                    )]),  launch_arguments={'use_sim_time': 'true', 'autostart': 'True', 'params_file': nav_params_file}.items()
+                    )]),  launch_arguments={'use_sim_time': 'true', 'autostart': 'True', 'params_file': nav_params_file}.items())]
     )
 
     # Launch them all!
@@ -130,6 +148,8 @@ def generate_launch_description():
         declare_headless,
         declare_world,
         declare_rviz,
+        declare_slam,
+        declare_nav,
 
         # Launch the nodes
         rviz2,
@@ -141,6 +161,6 @@ def generate_launch_description():
         spawn_entity,
         diff_drive_spawner,
         joint_broad_spawner,
-        slam,
+        slam_node,
         navigation
     ])
