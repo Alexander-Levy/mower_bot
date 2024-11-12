@@ -34,6 +34,13 @@ Contains the world files used in simulation. An empty world, a world full of obs
 TODO
 
 ## Usage
+The package is designed with versitility in mind. It provides three main launch files to activate all of it funtionality both in simulation and real world use cases, these are:
+```bash
+ros2 launch mower_bot sim.launch.py      / launches the simulation
+ros2 launch mower_bot mower.launch.py    / launches the control system of the mower
+ros2 launch mower_bot monitor.launch.py  / launches rviz, slam and navigation
+```
+We will go over these in more detail in the following sections. 
 
 ### Simulation
 The simulation can be run with the following command:
@@ -49,7 +56,7 @@ ros2 launch mower_bot sim.launch.py world:=<path_to_world> headless:=False rviz:
 By default the box world is loaded, the simulation is not visualized, and rviz2, slam and the navigation stack are launched as well.
 
 ### Real World Use
-The robot can be initialized with the following command on the Rasberry Pi. This will launch the robot state publisher, the joint state broadcaster, the rplidar driver, the controller manager and differential drive controller.
+The robot can be initialized with the following command on the Rasberry Pi. This will launch the robot state publisher, the joint state broadcaster, the rplidar driver, the controller manager and differential drive controller. It provides no launch configurations.
 ```bash
 ros2 launch mower_bot mower.launch.py 
 ```
@@ -61,7 +68,7 @@ ros2 launch mower_bot monitor.launch.py
 
 You can even use the monitor launch file in simulation by setting the "use_sim_time" launch argument to true. It also has rviz, slam and nav launch arguments, similar to the simulation launch file. This gives you great flexibility, for example you could use this to only open rviz2 and the controller tele-op with the real robot with the command bellow:
 ```bash
-ros2 launch mower_bot monitor.launch.py slam:=False nav:=False
+ros2 launch mower_bot monitor.launch.py use_sim_time:=true rviz:=True slam:=False nav:=False
 ```
 
 By default use_sim_time is set to false, rviz, slam and nav are set to True. 
