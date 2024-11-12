@@ -105,20 +105,15 @@ sudo apt install -y                         \
 ```bash
 sudo apt install -y                         \
     ros-humble-xacro                        \
-    ros-humble-joint-state-publisher-gui    \
-    ros-humble-gazebo-ros-pkgs              \
-    ros-humble-rplidar-ros                  \
+    ros-humble-twist-mux                    \
+    ros-humble-navigation2                  \
+    ros-humble-slam-toolbox                 \
     ros-humble-ros2-control                 \
     ros-humble-ros2-controllers             \
+    ros-humble-gazebo-ros-pkgs              \
     ros-humble-gazebo-ros2-control          \
-    ros-humble-slam-toolbox                 \
-    ros-humble-navigation2                  \
-    ros-humble-nav2-bringup                 \
-    ros-humble-turtlebot3                   \
-    ros-humble-twist-mux                    \
+    ros-humble-joint-state-publisher-gui    \
 ```
-
-### Dependencies only needed on the laptop:
 #### Fields2Cover and Opennav_Coverage 
 First go to your work space or create if you have not already
 ```bash
@@ -145,6 +140,15 @@ cd ~/<path_to_your_workspace>
 colcon build --symlink-install
 source install/setup.bash
 ros2 launch opennav_coverage_demo coverage_demo_launch.py
+```
+
+#### Coverage Navigator
+Go into your workspace, clone the files and build 
+```bash
+cd ~/<path_to_your_workspace>/src
+git clone https://github.com/Alexander-Levy/coverage_navigator.git 
+cd ..
+colcon build --symlink-install
 ```
 
 ### Rasberry Pi dependency only: 

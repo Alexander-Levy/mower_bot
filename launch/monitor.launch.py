@@ -80,12 +80,12 @@ def generate_launch_description():
     )
 
     # Launch the navigation stack configured for coverage planning
-    nav_params_file = os.path.join(get_package_share_directory(package_name), 'config', 'coverage_params.yaml')
+    nav_params_file = os.path.join(get_package_share_directory(package_name), 'config', 'nav_params.yaml')
     navigation = GroupAction(
         condition=IfCondition(nav),
         actions=[IncludeLaunchDescription(
                     PythonLaunchDescriptionSource([os.path.join(
-                        get_package_share_directory(package_name),'launch','coverage.launch.py'
+                        get_package_share_directory(package_name),'launch','nav.launch.py'
                     )]),  launch_arguments={'use_sim_time': use_sim_time, 'autostart': 'True', 'params_file': nav_params_file}.items())]
     )
 
