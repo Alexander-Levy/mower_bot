@@ -2,17 +2,16 @@
 
 ## Introduction
 
-This is the code for my thesis in university. The proyect consist of an autonomous robot that can:
-    
-    - Map its working area 
-    - Locate itself within that area 
-    - Plan the best path to mow the lawn 
-    - Calculate the appropiate wheel velocities to achieve this
+This is the code for my thesis in university. The proyect consist of an autonomous robot that can: 
+- Map its working area 
+- Locate itself within that area 
+- Plan the best path to mow the lawn 
+- Calculate the appropiate wheel velocities to achieve this
 
 This is a ROS2 based project that is built to work on: 
-    
-    Linux distro: Ubuntu 22.04 LTS
-    ROS2 distro: Humble Hawksbill
+
+ - [Ubuntu 22.04 LTS](https://releases.ubuntu.com/jammy/)
+ - [Humble Hawksbill](https://docs.ros.org/en/rolling/Releases/Release-Humble-Hawksbill.html)
 
 The processing of data is distributed between a Raspberry Pi running on the lawn mower and a laptop running on the same network
 
@@ -79,6 +78,12 @@ use_sim_time:=  true/false         false
 rviz:=          True/False         True
 slam:=          True/False         True
 nav:=           True/False         True
+```
+
+### Coverage Navigator
+The high level coverage planning and control tasks are handled by the [Coverage Navigator](https://github.com/Alexander-Levy/coverage_navigator) package. More info there. You can launch the main funtionality of the package with the following command
+```bash
+ros2 run coverage_navigator test_coverage
 ```
 
 ## Dependencies
