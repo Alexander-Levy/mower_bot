@@ -11,7 +11,8 @@ This is the code for my thesis in university. The proyect consist of an autonomo
 This is a ROS2 based project that is built to work on: 
 
  - [Ubuntu 22.04 LTS](https://releases.ubuntu.com/jammy/)
- - [Humble Hawksbill](https://docs.ros.org/en/rolling/Releases/Release-Humble-Hawksbill.html)
+ - [ROS2 Humble Hawksbill](https://docs.ros.org/en/rolling/Releases/Release-Humble-Hawksbill.html)
+ - [Gazebo Fortress](https://gazebosim.org/docs/fortress/ros_installation/)
 
 The processing of data is distributed between a Raspberry Pi running on the lawn mower and a laptop running on the same network
 
