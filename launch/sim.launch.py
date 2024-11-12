@@ -44,7 +44,6 @@ def generate_launch_description():
         name='nav', default_value='True',
         description='Activates the navigation stack if true')
 
-
     # Launch Robot State Publisher
     rsp = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource([os.path.join(

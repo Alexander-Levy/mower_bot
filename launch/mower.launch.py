@@ -77,7 +77,7 @@ def generate_launch_description():
         )
     )
 
-    # Launch them all!
+    # Launch!
     return LaunchDescription([
         rsp,
         rplidar,

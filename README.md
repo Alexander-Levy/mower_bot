@@ -18,20 +18,13 @@ The processing of data is distributed between a Raspberry Pi running on the lawn
 
 ## How the package is organized
 
-### config
-Contains all of the necesary configuration files. This includes rviz views, parameters for the robot controller, slam and navigation, as well as configuration for the tele-operation and multiplexer. 
+ - `config:` contains all of the necesary configuration files. This includes rviz views, parameters for the robot controller, slam and navigation, as well as configuration for the tele-operation and multiplexer. 
 
-### description
-Contains the robot's description written in xacro. Contains information about the robots dimensions, mass, actuators, sensors, etc. Also contains gazebo plugins for simulation purposes
+ - `description:` contains the robot's description written in xacro. Contains information about the robots dimensions, mass, actuators, sensors, etc. Also contains gazebo plugins for simulation purposes
 
-### launch
-Contains the launch files to startup the robot, the robot sensors, slam, navigation and simulation.
+ - `launch:` contains the launch files to startup the robot, the robot sensors, slam, navigation and simulation.
 
-### worlds
-Contains the world files used in simulation. An empty world, a world full of obstacles and a world where the robot spawns inside four walls.
-
-## Project Overview
-TODO
+ - `worlds:` contains the world files used in simulation. An empty world, a world full of obstacles and a world where the robot spawns inside four walls.
 
 ## Usage
 The package is designed with versitility in mind. It provides three main launch files to activate all of it funtionality both in simulation and real world use cases, these are:
@@ -48,21 +41,20 @@ The simulation can be run with the following command:
 ros2 launch mower_bot sim.launch.py 
 ```
 
-The simulation launch file offers serveral launch configurations to modify its behaviour, this is useful for testing. You can decide if the simulation(Gazebo) is visualized using the "headless" launch argument, the "world" launch argument lets you provide a path to a custom world, the "rviz" launch argument can be used to open rviz2 alongside the simulation, the "slam" launch argument can be used to decide if the robot maps its enviroment, and the "nav" launch argument can be used to automatically launch the navigation stack. Example with custom launch arguments:
+The simulation launch file offers serveral launch configurations to modify its behaviour, this is useful for testing. You can decide if the simulation(Gazebo) is visualized using the `headless` launch argument, the `world` launch argument lets you provide a path to a custom world, the `rviz` launch argument can be used to open rviz2 alongside the simulation, the `slam` launch argument can be used to decide if the robot maps its enviroment, and the `nav` launch argument can be used to automatically launch the navigation stack. Example with custom launch arguments:
 ```bash
 ros2 launch mower_bot sim.launch.py world:=<path_to_world> headless:=False rviz:=True slam:=True nav:=True
 ```
 
 By default the box world is loaded, the simulation is not visualized, and rviz2, slam and the navigation stack are launched as well. All of the launch configurations available are listed below:
 ```bash
-Config      Options            Default
+Config      Options            Default                           
 world:=     <path_to_world>    /src/mower_bot/worlds/box.world 
 headless:=  True/False         True
 rviz:=      True/False         True
 slam:=      True/False         True
 nav:=       True/False         True
 ```
-
 
 ### Real World Use
 The robot can be initialized with the following command on the Rasberry Pi. This will launch the robot state publisher, the joint state broadcaster, the rplidar driver, the controller manager and differential drive controller. It provides no launch configurations.
@@ -75,7 +67,7 @@ To monitor, control and launch the high level interfaces of the robot we can use
 ros2 launch mower_bot monitor.launch.py 
 ```
 
-You can even use the monitor launch file in simulation by setting the "use_sim_time" launch argument to true. It also has rviz, slam and nav launch arguments, similar to the simulation launch file. This gives you great flexibility, for example you could use this to only open rviz2 and the controller tele-op with the real robot with the command bellow:
+You can even use the monitor launch file in simulation by setting the `use_sim_time` launch argument to true. It also has `rviz`, `slam` and `nav` launch arguments, similar to the simulation launch file. This gives you great flexibility, for example you could use this to only open rviz2 and the controller tele-op with the real robot with the command bellow:
 ```bash
 ros2 launch mower_bot monitor.launch.py use_sim_time:=false rviz:=True slam:=False nav:=False
 ```

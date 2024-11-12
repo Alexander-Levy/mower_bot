@@ -16,8 +16,7 @@ def generate_launch_description():
     params_file = LaunchConfiguration('params_file')
     
     # Path to configuration file 
-    params_file = os.path.join(get_package_share_directory(package_name),
-                                       'config', 'slam_params.yaml')
+    params_file = os.path.join(get_package_share_directory(package_name),'config', 'slam_params.yaml')
 
     # Declare the launch configuration
     declare_use_sim_time = DeclareLaunchArgument(
