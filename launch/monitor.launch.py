@@ -112,5 +112,5 @@ def generate_launch_description():
         slam_node,
         navigation,
         twist_mux,
-        twist_stamper
+        #twist_stamper
     ])

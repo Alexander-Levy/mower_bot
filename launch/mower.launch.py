@@ -26,7 +26,7 @@ def generate_launch_description():
                     get_package_share_directory(package_name),'launch','rplidar.launch.py'
                 )])
     )
-
+    
     # Get our robot's description from robot state publisher
     robot_description = Command(['ros2 param get --hide-type /robot_state_publisher robot_description'])
     
