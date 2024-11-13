@@ -37,23 +37,32 @@ def generate_launch_description():
         description='Activates the navigation stack if true')
 
    
-    # Launch Joystick Tele Operation
+    # Launch joystick Tele Operation
     joystick = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource([os.path.join(
                     get_package_share_directory(package_name),'launch','joystick.launch.py'
                 )]), launch_arguments={'use_sim_time': use_sim_time}.items()
     )
 
-    # Launch Twist Mux
-    # twist_mux_params = os.path.join(get_package_share_directory(package_name),'config','twist_mux.yaml')
-    # twist_mux = node(
-    #         package="twist_mux",
-    #         executable="twist_mux",
-    #         parameters=[twist_mux_params, {'use_sim_time': true}],
-    #         remappings=[('/cmd_vel_out','/diff_cont/cmd_vel_unstamped')]
-    # )
+    # Launch twist Mux
+    twist_mux_params = os.path.join(get_package_share_directory(package_name),'config','twist_mux.yaml')
+    twist_mux = Node(
+            package="twist_mux",
+            executable="twist_mux",
+            parameters=[twist_mux_params, {'use_sim_time': use_sim_time}],
+            remappings=[('/cmd_vel_out','/diff_cont/cmd_vel_unstamped')]
+    )
+
+    # Launch twist stamper
+    twist_stamper = Node(
+            package='twist_stamper',
+            executable='twist_stamper',
+            parameters=[{'use_sim_time': use_sim_time}],
+            remappings=[('/cmd_vel_in','/diff_cont/cmd_vel_unstamped'),
+                        ('/cmd_vel_out','/diff_cont/cmd_vel')]
+    )
         
-    # Launch Rviz with pre-made view
+    # Launch rviz with pre-made view
     rviz_config_file = os.path.join(get_package_share_directory(package_name), 'config', 'mower.rviz')
     rviz2 = GroupAction(
         condition=IfCondition(rviz),
@@ -70,7 +79,7 @@ def generate_launch_description():
                                 ('/initialpose', 'initialpose')])]
     )
 
-    # Launch Simultaneous Localization and Mapping
+    # Launch simultaneous Localization and Mapping
     slam_node = GroupAction(
         condition=IfCondition(slam),
         actions=[IncludeLaunchDescription(
@@ -101,5 +110,7 @@ def generate_launch_description():
         rviz2,
         joystick,
         slam_node,
-        navigation
+        navigation,
+        twist_mux,
+        #twist_stamper
     ])
