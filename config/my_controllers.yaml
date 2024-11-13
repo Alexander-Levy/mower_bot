@@ -28,7 +28,7 @@ diff_cont:
     # Feedback
     open_loop: false        # Decided how to calculate odometry
     position_feedback: true # Is there position feedback from hardware
-    use_stamped_vel: false  # Stamped vel if true
+    use_stamped_vel: true   # Stamped vel if true
     velocity_rolling_window_size: 10 # used to calculate odometry
     # Limited velocity
     publish_limited_velocity: false  
