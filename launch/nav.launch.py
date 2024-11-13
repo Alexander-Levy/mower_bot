@@ -25,7 +25,7 @@ def generate_launch_description():
                        'planner_server',
                        'behavior_server',
                        'bt_navigator',
-                       'velocity_smoother',
+                       #'velocity_smoother',
                        'waypoint_follower',
                        'coverage_server']
 
@@ -82,7 +82,7 @@ def generate_launch_description():
                 plugin='nav2_controller::ControllerServer',
                 name='controller_server',
                 parameters=[configured_params],
-                remappings=remappings + [('cmd_vel', 'cmd_vel_nav')]),
+                remappings=remappings), #+ [('cmd_vel', 'cmd_vel_nav')]
             ComposableNode(
                 package='nav2_smoother',
                 plugin='nav2_smoother::SmootherServer',

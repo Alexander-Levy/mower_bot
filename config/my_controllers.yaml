@@ -12,45 +12,27 @@ controller_manager:
 
 diff_cont:
   ros__parameters:
-
+    # Loop
     publish_rate: 50.0
-
+    cmd_vel_timeout: 0.5
+    # Frames
     base_frame_id: base_link
-
+    odom_frame_id: odom
+    enable_odom_tf: true # Decides if odom -> base_link transform is published 
+    # Wheel info
     left_wheel_names: ['left_wheel_joint']
     right_wheel_names: ['right_wheel_joint']
-    wheel_separation: 0.338
+    wheels_per_side: 1
     wheel_radius: 0.0775
-
-    use_stamped_vel: false
-    # open_loop: false    
-
-    # odom_frame_id: x
-    # enable_odom_tf: x
-
-    # cmd_vel_timeout: x
-    # publish_limited_velocity: x
-    # velocity_rolling_window_size: x
+    wheel_separation: 0.338
+    # Feedback
+    open_loop: false        # Decided how to calculate odometry
+    position_feedback: true # Is there position feedback from hardware
+    use_stamped_vel: false  # Stamped vel if true
+    velocity_rolling_window_size: 10 # used to calculate odometry
+    # Limited velocity
+    publish_limited_velocity: false  
     
-    # linear.x.has_velocity_limits: false
-    # linear.x.has_acceleration_limits: false
-    # linear.x.has_jerk_limits: false
-    # linear.x.max_velocity: NAN
-    # linear.x.min_velocity: NAN
-    # linear.x.max_acceleration: NAN
-    # linear.x.min_acceleration: NAN
-    # linear.x.max_jerk: NAN
-    # linear.x.min_jerk: NAN
-
-    # angular.z.has_velocity_limits: false
-    # angular.z.has_acceleration_limits: false
-    # angular.z.has_jerk_limits: false
-    # angular.z.max_velocity: NAN
-    # angular.z.min_velocity: NAN
-    # angular.z.max_acceleration: NAN
-    # angular.z.min_acceleration: NAN
-    # angular.z.max_jerk: NAN
-    # angular.z.min_jerk: NAN
-
 # joint_broad:
 #   ros__parameters:
+#     use_local_topics: false
