@@ -29,11 +29,11 @@ def generate_launch_description():
         description='Opens rviz is set to True')
     
     declare_slam = DeclareLaunchArgument(
-        name='slam', default_value='True',
+        name='slam', default_value='False',
         description='Activates simultaneous localization and mapping')
     
     declare_nav = DeclareLaunchArgument(
-        name='nav', default_value='True',
+        name='nav', default_value='False',
         description='Activates the navigation stack if true')
 
    
@@ -110,7 +110,5 @@ def generate_launch_description():
         rviz2,
         joystick,
         slam_node,
-        navigation,
-        twist_mux,
-        #twist_stamper
+        navigation
     ])
